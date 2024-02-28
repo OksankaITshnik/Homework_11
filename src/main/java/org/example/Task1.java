@@ -2,18 +2,20 @@ package org.example;
 import java.sql.SQLOutput;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Task1 {
-    public static String filterOddIndexedNames(List<String> names) {
-        StringBuilder result = new StringBuilder();
-        for (int i = 0; i < names.size(); i += 2) {
-            result.append(i+1).append(". " + names.get(i) + ", ");
-        }
-        return result.toString().replaceAll(", $", "");
+    public static String formatOddIndexNames (List<String> names) {
+        return IntStream.range(0,names.size())
+                .filter( i-> i % 2 == 0)
+                .mapToObj(i ->(i+1)+"."+names.get(i))
+                .collect(Collectors.joining(","));
     }
 
     public static void main(String[] args) {
-        List<String> input = Arrays.asList("Oksana","Vita", "Dani", "mika", "pedro", "Hugo", "Newnam");
-        System.out.println(Task1.filterOddIndexedNames(input));
+        List<String> input = List.of("Oksana","Vita", "Dani", "mika", "pedro", "Hugo", "Newnam") ;
+       // String result = formatOddIndexNames(input);
+        System.out.println(formatOddIndexNames(input));
     }
 }
